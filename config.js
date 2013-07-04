@@ -2,8 +2,6 @@
  * Config vars for Message.
  */
 
-var fs = require('fs');
-
 module.exports = {
 
 	port: process.env.PORT || 3000,
@@ -58,7 +56,3 @@ module.exports = {
 	}
 
 };
-
-module.exports.appVersion = "1372935172";
-module.exports.libVersion = "1372937307";
-module.exports.cssVersion = "1372893482";

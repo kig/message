@@ -4,6 +4,7 @@
  */
 
 var config = require('../config');
+var bundle = require('../bundle_versions');
 
 var authProviders = [];
 for (var p in config.auth) {
@@ -15,8 +16,8 @@ exports.index = function(req, res){
 		title: 'Message', user: req.user, token: req.session._csrf,
 		production: process.env.NODE_ENV === 'production',
 		authProviders: authProviders,
-		appVersion: config.appVersion,
-		libVersion: config.libVersion,
-		cssVersion: config.cssVersion
+		appVersion: bundle.appVersion,
+		libVersion: bundle.libVersion,
+		cssVersion: bundle.cssVersion
 	});
 };
