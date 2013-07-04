@@ -1,0 +1,17 @@
+<!doctype html5>
+<html>
+	<head>
+		<title>{{= it.title}}</title>
+		{{ if (it.production) { }}
+		<link rel="stylesheet" href="//cdn.fhtr.net/message/css/base.{{= it.cssVersion }}.css">
+		{{ } else { }}
+		<link rel="stylesheet" href="/css/base.css">
+		<link rel="stylesheet" href="/css/style.css">
+		{{ } }}
+		<link rel="shortcut icon" href="{{= it.production ? '//cdn.fhtr.net/message' : '' }}/images/favicon.png">
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+	</head>
+	<body>
+		{{= it.body}}
+	</body>
+</html>

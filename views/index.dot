@@ -1,0 +1,52 @@
+{{ if (it.user) { }}
+<div id="authbox">
+	<a href="/logout">Sign out</a>
+</div>
+{{ } else { }}
+<div id="frontpage">
+	<div id="circle"></div>
+	<img src="/images/fhtr_icon.png" width="64" height="64">
+	<span id="message">Message</span>
+	<div id="tagline">Perfect your presentations</div>
+	<div id="signin">
+		Sign in with
+		<div id="signin-providers">
+{{ it.authProviders.forEach(function(p) { }}
+			<p><a href="/auth/{{= p }}">{{= p }}</a>
+{{ }); }}
+		</div>
+	</div>
+</div>
+{{ } }}
+
+<div id="container">
+	<div id="ui"></div>
+</div>
+<div id="editor">
+	<div id="slides"></div>
+	<div id="narrative"></div>
+</div>
+
+<div id="footer">
+	 <p>Contact me at <a href="http://twitter.com/ilmarihei">@ilmarihei</a> and/or <a href="mailto:ilmari@fhtr.net">ilmari@fhtr.net</a>
+	 <p><small>FHTR Ltd &copy; 2013</small>
+</div>
+
+<script>
+	window.User = ({{= JSON.stringify(it.user ? {username: it.user.username, displayName: it.user.displayName} : {}) }});
+	window.User.token = ({{= JSON.stringify(it.token) }});
+</script>
+
+{{ if (it.production) { }}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+<script src="//cdn.fhtr.net/message/js/lib.{{= it.libVersion }}.js"></script>
+<script src="//cdn.fhtr.net/message/js/app.{{= it.appVersion }}.js"></script>
+{{ } else { }}
+<script src="js/vendor/jquery.min.js"></script>
+<script src="js/vendor/stylus.js"></script>
+<script src="js/E.js"></script>
+<script src="js/slide.js"></script>
+<script src="js/timer.js"></script>
+<script src="js/slides.js"></script>
+<script src="js/main.js"></script>
+{{ } }}

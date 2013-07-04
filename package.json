@@ -1,0 +1,22 @@
+{
+	"name": "FHTR-Message",
+	"version": "0.0.3",
+	"repository": "https://github.com/kig/message",
+	"private": true,
+	"scripts": {
+		"start": "node app.js"
+	},
+	"dependencies": {
+		"connect": "*",
+		"express": "3.2.6",
+		"express-dot": "*",
+		"simple-lru-cache": "*",
+		"passport": "*",
+		"passport-facebook": "*",
+		"passport-twitter": "*",
+		"passport-google-oauth": "*",
+		"passport-github": "*",
+		"mongoose": "*",
+		"stylus": "*"
+	}
+}
