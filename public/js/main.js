@@ -166,12 +166,12 @@
 
 	var renderPresentationListItem = function(r, app) {
 		var li = E.LI(
-			E.A(E.T(r.title || "Unnamed"), {
-				href: "?page=view&id="+encodeURIComponent(r.id)
+			E.A(E.T(r.title || "Unnamed (Click to edit)"), {
+				href: "?page=edit&id="+encodeURIComponent(r.id)
 			}),
 			E.T(' '),
-			E.A(E.T("Edit"), {
-				href: "?page=edit&id="+encodeURIComponent(r.id)
+			E.A(E.T("View"), {
+				href: "?page=view&id="+encodeURIComponent(r.id)
 			}),
 			E.T(' '),
 			E.SPAN(E.T(r.published ? "Public" : "Private")),
