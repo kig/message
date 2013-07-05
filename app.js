@@ -129,7 +129,7 @@ app.get('/logout', function(req, res) {
 app.get('/presentation/list', presentation.list);
 app.get('/presentation/get', presentation.get);
 app.post('/presentation/put', presentation.put);
-app.post('/presentation/delete', presentation.delete);
+app.post('/presentation/delete', presentation["delete"]);
 
 
 var httpServer = http.createServer(app);

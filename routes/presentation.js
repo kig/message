@@ -24,8 +24,9 @@ exports.put = function(request, response) {
 					response.end("Failed to save");
 					console.log(err);
 				} else {
-					//console.log(obj);
-					response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'});
+					response.statusCode = 200;
+					response.setHeader('Content-Type', 'application/json');
+					response.setHeader('Access-Control-Allow-Origin', '*');
 					response.end(JSON.stringify(obj));
 				}
 			});
@@ -48,8 +49,9 @@ exports.get = function(request, response) {
 			response.writeHead(403, {'Content-Type': 'text/plain', 'Access-Control-Allow-Origin': '*'});
 			response.end("This presentation is not published");
 		} else {
-			//console.log('/presentation/get', presos);
-			response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'});
+			response.statusCode = 200;
+			response.setHeader('Content-Type', 'application/json');
+			response.setHeader('Access-Control-Allow-Origin', '*');
 			response.end(JSON.stringify(presos[0] || null));
 		}
 	});
@@ -57,7 +59,9 @@ exports.get = function(request, response) {
 
 exports.list = function(request, response) {
 	var person = request.user;
-	response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'});
+	response.statusCode = 200;
+	response.setHeader('Content-Type', 'application/json');
+	response.setHeader('Access-Control-Allow-Origin', '*');
 	var q;
 	if (person && request.query.person == person.username) {
 		q = {author: request.query.person};
@@ -72,13 +76,15 @@ exports.list = function(request, response) {
 	});
 };
 
-exports.delete = function(request, response) {
+exports["delete"] = function(request, response) {
 	var person = request.user;
 	Presentation.find({_id: request.body.id, author: person.username}, function(err, presos) {
 		for (var i=0; i<presos.length; i++) {
 			presos[i].remove();
 		}
-		response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'});
+		response.statusCode = 200;
+		response.setHeader('Content-Type', 'application/json');
+		response.setHeader('Access-Control-Allow-Origin', '*');
 		response.end(JSON.stringify({deleted: presos.length}));
 	});
 };
