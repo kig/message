@@ -76,9 +76,9 @@ Ok, you're good to go!
 
 If you want to switch NODE_ENV to production, you need to edit index.dot and change the CDN to point to your own CDN.
 
-To create the compiled build files, run bin/build.sh. The build script places the bundled files into build/ and you can copy them over to your server.
-Copy the bundle file versions into config.js to make index.dot's CDN template work properly.
+To create the compiled build files, run bin/build.sh. The build script compiles JavaScript and CSS into bundles and places them in build/. To run the production version of the app, you should then copy the bundle files over to your own CDN server.
 
+The bundle filenames are set to the MD5 hash of the bundle contents, so you can set the bundle file Expires-headers to a far-future date.
 
 # License
 
