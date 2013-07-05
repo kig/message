@@ -43,7 +43,6 @@ module.exports = {
 				consumerSecret: ""
 			}
 		},
-		 */
 
 		github: {
 			strategy: require('passport-github').Strategy,
@@ -52,6 +51,7 @@ module.exports = {
 				clientSecret: ""
 			}
 		}
+		 */
 
 	}
 

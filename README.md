@@ -35,20 +35,34 @@ Message embeds YouTube and Vimeo video URLs, Spotify and Soundcloud audio URLs, 
 
 First, you need [MongoDB](http://mongodb.org) and [Node.js](http://nodejs.org).
 
-Second, go to [GitHub > Account settings > Applications](https://github.com/settings/applications/new) and
-create a new application called Message-Local. Copy the client ID and the client secret into the [config.js](blob/master/config.js) file.
-
 Good, now your user authentication system is set up.
 
-Third, install the dependencies and start the servers.
+Second, install the dependencies and start the servers.
 
     npm install
     mongod --config mongod.config &
     node app.js
 
-Now point your browser at http://localhost:3000
+Third, point your browser at http://localhost:3000
 
-Click on the Github link and complete the authentication flow and you should be good to go.
+
+# Federated authentication
+
+If you want to use log in using GitHub, Facebook, Twitter or Google, you can uncomment the pertinent
+sections of config.js auth object. However, to use any of the providers, you need to set up an API app on each service.
+
+Here's how you do it for GitHub authentication:
+
+Go to [GitHub > Account settings > Applications](https://github.com/settings/applications/new) and
+create a new application called Message-Local. Copy the client ID and the client secret into the [config.js](blob/master/config.js) file. The callback URL for the local app should be http://localhost:3000/auth/github/callback and the app URL can be http://localhost:3000. If you have deployed the app to a different server, you need to use the URLs to that.
+
+Done. That wasn't too hard, eh?
+
+Facebook: go to the [Facebook Developers](https://developers.facebook.com/) page and [create a new app](https://developers.facebook.com/apps/). Set up the app URLs like above.
+
+Google: use the [API Console](https://code.google.com/apis/console) to create a new app and switch on the Google+ API, then go to the API Access pane and set up your Client ID for web applications.
+
+Twitter: go to the [Twitter Developers](https://dev.twitter.com/] page and create a [new app](https://dev.twitter.com/apps/new). Twitter requires you to go to app settings and tick a "Sign in with Twitter" box to enable Twitter logins. It also pesters you to provide a public URL for the app, but you can leave that blank or point it to a different place.
 
 
 # Deploying to Heroku

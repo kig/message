@@ -16,7 +16,9 @@
 		"passport-twitter": "*",
 		"passport-google-oauth": "*",
 		"passport-github": "*",
+		"passport-local": "*",
 		"mongoose": "*",
-		"stylus": "*"
+		"stylus": "*",
+		"bcrypt": "* "
 	}
 }

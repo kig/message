@@ -17,6 +17,8 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var stylus = require('stylus');
 
+var LocalStrategy = require('passport-local').Strategy;
+
 // Connect to the MongoDB server.
 mongoose.connect(config.mongodb_server);
 
@@ -88,14 +90,53 @@ for (var provider in config.auth) {
 	passportProvider(app, provider, p.authenticateOptions);
 }
 
+passport.use(new LocalStrategy(function(username, password, done) {
+	schema.Person.findOne({ username: username }, function(err, user) {
+		if (err) { return done(err); }
+		if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
+		user.comparePassword(password, function(err, isMatch) {
+			if (err) return done(err);
+			if(isMatch) {
+				return done(null, user);
+			} else {
+				return done(null, false, { message: 'Invalid password' });
+			}
+		});
+		return null;
+	});
+}));
+
 
 // Set up user session cache.
 
 var PersonCache = new (require('simple-lru-cache'))({ maxSize: 100000 });
 
+
+var createAccessToken = function (user, done) {
+	var token = user.generateRandomToken();
+	schema.Person.findOne( { accessToken: token }, function (err, existingUser) {
+		if (err) {
+			return done( err );
+		}
+		if (existingUser) {
+			createAccessToken(user, done); // Run the function again - the token has to be unique!
+		} else {
+			user.set('accessToken', token);
+			user.save( function (err) {
+				if (err) return done(err);
+				PersonCache.set(user.get('accessToken'), user);
+				return done(null, user.get('accessToken'));
+			});
+		}
+		return null;
+	});
+};
+
 passport.serializeUser = function(user, done) {
-	PersonCache.set(user.username, user);
-	done(null, user.username);
+	//done(null, user.username);
+	if ( user._id ) {
+		createAccessToken(user, done);
+	}
 };
 
 passport.deserializeUser = function(id, done) {
@@ -103,11 +144,13 @@ passport.deserializeUser = function(id, done) {
 	if (person) {
 		done(null, person);
 	} else {
-		schema.Person.findOne({ username: id }, function(err, user) {
+		schema.Person.findOne({ accessToken: id }, function(err, user) {
 			if (err) {
 				done(err);
 			} else {
-				PersonCache.set(user.username, user);
+				if (user) {
+					PersonCache.set(user.accessToken, user);
+				}
 				done(null, user);
 			}
 		});
@@ -118,7 +161,47 @@ passport.deserializeUser = function(id, done) {
 app.get('/', routes.index);
 
 app.get('/login', function(req, res) {
-	res.end("Oops, auth failed and I have no fallback.");
+	res.render('login', { user: req.user, message: req.session.messages, _csrf: req.session._csrf });
+});
+
+app.post('/login', function(req, res, next) {
+	passport.authenticate('local', function(err, user, info) {
+		if (err) { return next(err); }
+		if (!user) {
+			req.session.messages =  [info.message];
+			return res.redirect('/login');
+		}
+		return req.logIn(user, function(err) {
+			if (err) { return next(err); }
+			return res.redirect('/');
+		});
+	})(req, res, next);
+});
+
+app.get('/register', function(req, res) {
+	res.render('register', { user: req.user, message: req.session.messages, _csrf: req.session._csrf });
+});
+
+app.post('/register', function(req, res, next) {
+	schema.Person.findOne({ username: req.body.username }, function(err, user) {
+		if (err) { return next(err); }
+		if (!user) {
+			var newUser = new schema.Person({
+				username: req.body.username,
+				password: req.body.password
+			});
+			return newUser.save(function(err, user) {
+				if (err) return next(err);
+				return req.logIn(user, function(err) {
+					if (err) { return next(err); }
+					return res.redirect('/');
+				});
+			});
+		} else {
+			req.session.messages = [ "Username already exists" ];
+			return res.redirect('/register');
+		}
+	});
 });
 
 app.get('/logout', function(req, res) {

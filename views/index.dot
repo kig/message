@@ -11,6 +11,7 @@
 	<div id="signin">
 		Sign in with
 		<div id="signin-providers">
+			<p><a href="/login">login</a>
 {{ it.authProviders.forEach(function(p) { }}
 			<p><a href="/auth/{{= p }}">{{= p }}</a>
 {{ }); }}
