@@ -1,21 +1,24 @@
 {{ if (it.message) { }}
 <p>{{= it.message}}</p>
 {{ } }}
-<h1>Sign up</h1>
-<form action="/register" method="post">
-	<input name="_csrf" type="hidden" value="{{= it._csrf }}">
-	<div>
-		<label for="username">Username:</label>
-		<input type="text" name="username"/><br/>
-	</div>
-	<div>
-		<label for="password">Password:</label>
-		<input type="password" name="password"/><br/>
-	</div>
-	<div>
-		<input type="checkbox" name="rememberme"/>Remember Me
-	</div>
-	<div>
-		<input type="submit" name="register" value="Register"/>
-	</div>
-</form>
+
+<div id="sign-up">
+	<h1>Sign up</h1>
+	<form action="/register" method="post">
+		<input name="_csrf" type="hidden" value="{{= it._csrf }}">
+			<div>
+				<label for="username">Username:</label>
+				<input type="text" name="username"/><br/>
+			</div>
+			<div>
+				<label for="password">Password:</label>
+				<input type="password" name="password"/><br/>
+			</div>
+			<div>
+				<input type="checkbox" name="rememberme"/>Remember Me
+			</div>
+			<div>
+				<input type="submit" name="register" value="Register"/>
+			</div>
+	</form>
+</div>

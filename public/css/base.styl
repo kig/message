@@ -1,0 +1,150 @@
+body
+  font-size: 14px;
+  font-family: 'Open Sans', Helvetica Neue, Helvetica, sans-serif;
+  font-weight: 300;
+
+
+*
+  margin: 0;
+  padding: 0;
+
+
+@-webkit-keyframes fadein
+  from {
+    opacity:0;
+  }
+  to {
+    opacity:1;
+  }
+
+
+#authbox
+  -webkit-animation: fadein 1s 1s;
+  -webkit-animation-fill-mode: backwards;
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  z-index: 101;
+  font-size: 14px;
+  letter-spacing: 1px;
+  font-family: Helvetica Neue, 'Open Sans', Helvetica, sans-serif;
+
+  a
+    text-decoration: none;
+
+p#message
+  box-sizing border-box
+  moz-box-sizing border-box
+  margin-left 20px
+  margin-top 20px
+  padding 20px
+  width 200px
+  text-align center
+  color maroon
+  border 1px solid maroon
+
+#sign-in
+  padding-bottom 30px
+  border-bottom 1px solid #ccc
+
+#sign-in, #sign-up
+
+  width 200px
+  margin-left 20px
+  margin-top 20px
+  font-weight 300
+  font-size 13px
+
+  h1
+    font-family: Helvetica Neue, 'Open Sans', Helvetica, sans-serif;
+    font-weight: 100;
+    margin-top 20px
+    margin-bottom 8px
+
+  div
+    margin-bottom 4px
+
+  label[for=rememberme]
+    padding-left 4px
+
+  input[type=text], input[type=password]
+    display block
+    width 200px
+
+  input[type=submit]
+    margin-top 8px
+
+a
+  color: #00B7FF;
+
+
+#footer
+  display: none;
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  font-size: 13px;
+  z-index: 100;
+
+
+#frontpage
+  z-index: 100;
+  position: absolute;
+  display: block;
+  width: 100%;
+  top: 50%;
+  margin-top:-20px;
+  text-align: center;
+  font-family: Helvetica Neue, 'Open Sans', Helvetica, sans-serif;
+  font-weight: 300;
+
+  #circle
+    width: 450px;
+    height: 450px;
+    border-radius: 50%;
+    border: 1px solid #888;
+    position: absolute;
+    display: block;
+    left: 50%;
+    top: -270px;
+    margin-left: -225px;
+    opacity: 0.25;
+    z-index: -1;
+
+
+  #message
+    position: relative;
+    top: -8px;
+    font-size: 67px;
+    margin-left: 11px;
+    font-weight: 100;
+    letter-spacing: 0px;
+
+  #tagline
+    font-size: 13px;
+    letter-spacing: 1px;
+    margin-top: 0px;
+    margin-left: 58px;
+    text-transform: uppercase;
+
+  #signin
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+    display: inline-block;
+    text-align: left;
+    left: 270px;
+    top: -42px;
+
+    #signin-providers
+      font-size: 13px;
+      margin-top: 32px;
+      line-height: 1.4em;
+
+      a
+        text-decoration: none;
+
+
+

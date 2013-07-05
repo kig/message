@@ -160,16 +160,17 @@ passport.deserializeUser = function(id, done) {
 
 app.get('/', routes.index);
 
+var querystring = require('querystring');
+
 app.get('/login', function(req, res) {
-	res.render('login', { user: req.user, message: req.session.messages, _csrf: req.session._csrf });
+	res.render('login', { user: req.user, message: req.query.message, _csrf: req.session._csrf });
 });
 
 app.post('/login', function(req, res, next) {
 	passport.authenticate('local', function(err, user, info) {
 		if (err) { return next(err); }
 		if (!user) {
-			req.session.messages =  [info.message];
-			return res.redirect('/login');
+			return res.redirect('/login?message='+querystring.escape(info.message));
 		}
 		return req.logIn(user, function(err) {
 			if (err) { return next(err); }
@@ -179,7 +180,7 @@ app.post('/login', function(req, res, next) {
 });
 
 app.get('/register', function(req, res) {
-	res.render('register', { user: req.user, message: req.session.messages, _csrf: req.session._csrf });
+	res.render('register', { user: req.user, message: req.query.message, _csrf: req.session._csrf });
 });
 
 app.post('/register', function(req, res, next) {
@@ -198,8 +199,7 @@ app.post('/register', function(req, res, next) {
 				});
 			});
 		} else {
-			req.session.messages = [ "Username already exists" ];
-			return res.redirect('/register');
+			return res.redirect('/register?message='+querystring.escape('Username already exists'));
 		}
 	});
 });
