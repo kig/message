@@ -322,8 +322,21 @@
 					'script',
 					'Script',
 					'TEXTAREA',
-					''
+					("Write your presentation script here. Jot down roughly what you're going to say and when."
+					 + "\n\nTry to split your presentation into 10-minute segments that have an intermission between them."
+					 + " This intermission can be a video, change of speaker, a product demo or anything that gives the "
+					 + "audience a break from focusing on you.\n\n"
+					 + "If you're writing a word-by-word script, it takes roughly 15 lines to fill up a minute. "
+					 + "If you're not writing word-by-word, you can try rehearsing the script with a timer and writing down a timer mark every five minutes or so. The script should help you figure out your pacing and stick to it."
+					)
 				);
+				$(scriptEditor).click(function(ev) {
+					if (ev.target === scriptEditor) {
+						$(scriptEditor).removeClass('focusmode');
+					}
+				}).find('textarea').focus(function(ev) {
+					$(scriptEditor).addClass('focusmode');
+				});
 				var scriptEditorDiv = E.DIV(
 					{"class": 'slide-editor'},
 //					E.H3(E.T('Story | '), E.SPAN('Slides', {onclick: showSlides})),
